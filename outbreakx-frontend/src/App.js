@@ -1,10 +1,8 @@
+// src/App.js
 import React from "react";
 import './App.css';
 import MapComponent from './Components/MapComponent'; 
 import 'leaflet/dist/leaflet.css';
-
-
-
 
 function App() {
   return (
@@ -18,21 +16,9 @@ function App() {
         </nav>
       </header>
       <section>
-
-      <MapComponent/>
-
-
-
-
-
-
-
-
+        <MapComponent />
       </section>
     </div>
-
-    
-    
   );
 }
 

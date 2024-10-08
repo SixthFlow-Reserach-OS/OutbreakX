@@ -8,6 +8,8 @@ In the project directory, you can run:
 
 ### `npm start`
 
+npm i react-scripts (or npm install react-scripts) is used to install the react-scripts package in a React project that was created using Create React App (CRA).
+
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 

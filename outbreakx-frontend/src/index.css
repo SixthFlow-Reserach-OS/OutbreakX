@@ -1,0 +1,76 @@
+/* General body styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff; /* Background color */
+  color: rgb(0, 0, 0); /* Text color */
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+}
+
+.nav-links li a:hover {
+  color: #007BFF;
+}
+
+/* Hero section styles */
+.hero {
+  padding-top: 100px; 
+  text-align: center;
+  background-color: #f4f4f4;
+  padding: 3rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #333;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 1rem 0;
+}
+
+.cta-btn {
+  padding: 0.8rem 2rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.cta-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}

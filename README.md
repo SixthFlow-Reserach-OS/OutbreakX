@@ -1,4 +1,3 @@
-```markdown
 # Contribution Guidelines for OutbreakX (Hacktoberfest 2024)
 
 Thank you for your interest in contributing to **OutbreakX**, an open-source project for infectious disease surveillance using geospatial data. Contributions from the community are what make this project successful, and we are excited to have you onboard during Hacktoberfest!
@@ -9,15 +8,23 @@ Please take a moment to review this document before contributing. By participati
 
 ## Table of Contents
 
-1. [Code of Conduct](#code-of-conduct)
-2. [Getting Started](#getting-started)
-3. [How to Contribute](#how-to-contribute)
-4. [Development Setup](#development-setup)
-5. [Contribution Guidelines](#contribution-guidelines)
-6. [Issue Reporting](#issue-reporting)
-7. [Pull Request Process](#pull-request-process)
-8. [Hacktoberfest Participation](#hacktoberfest-participation)
-9. [Contact](#contact)
+- [Contribution Guidelines for OutbreakX (Hacktoberfest 2024)](#contribution-guidelines-for-outbreakx-hacktoberfest-2024)
+  - [Table of Contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [Getting Started](#getting-started)
+  - [How to Contribute](#how-to-contribute)
+  - [Development Setup](#development-setup)
+    - [Steps:](#steps)
+  - [Contribution Guidelines](#contribution-guidelines)
+    - [Coding Standards](#coding-standards)
+    - [Git Workflow](#git-workflow)
+    - [Frontend Contributions (ReactJS)](#frontend-contributions-reactjs)
+    - [Backend Contributions (NodeJS/ExpressJS)](#backend-contributions-nodejsexpressjs)
+    - [Testing](#testing)
+  - [Issue Reporting](#issue-reporting)
+  - [Pull Request Process](#pull-request-process)
+  - [Hacktoberfest Participation](#hacktoberfest-participation)
+  - [Contact](#contact)
 
 ---
 
@@ -151,5 +158,3 @@ If you have any questions, feel free to reach out to us via:
 
 We are looking forward to your contributions! Happy coding, and enjoy Hacktoberfest 2024! 🎉
 
----
-```

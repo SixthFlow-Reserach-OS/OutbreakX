@@ -158,3 +158,17 @@ If you have any questions, feel free to reach out to us via:
 
 We are looking forward to your contributions! Happy coding, and enjoy Hacktoberfest 2024! 🎉
 
+Start frontend workspace
+
+`pnpm --filter frontend start`
+
+start backend workspace
+
+`pnpm --filter backend dev`
+
+start project using turbo repo
+
+`turbo run dev`
+
+Note: If any error check the turborepo config or individual package.json file.
+

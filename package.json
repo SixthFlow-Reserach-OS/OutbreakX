@@ -1,0 +1,18 @@
+{
+  "name": "outbreak-x",
+  "version": "1.0.0",
+  "description": "OutbreakX is an open-source platform for infectious disease surveillance, using geospatial data to track outbreaks in real time. Built with ExpresJS, NodeJS, ReactJS, PostgreSQL with PostGIS, and OpenStreetMaps.",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  },
+  "packageManager": "pnpm@9.3.0",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "turbo": "^2.2.1"
+  }
+}

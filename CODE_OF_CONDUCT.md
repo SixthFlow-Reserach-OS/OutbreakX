@@ -1,7 +1,3 @@
-Here's a Code of Conduct template for an open-source project, which you can adapt to your project's specific needs:
-
----
-
 # Contributor Code of Conduct
 
 ## Purpose
@@ -48,6 +44,3 @@ Project maintainers who do not follow or enforce the Code of Conduct in good fai
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/), version 2.1.
 
----
-
-This document sets clear expectations for behavior and provides guidelines on reporting and enforcement, helping maintain a positive and productive project environment.

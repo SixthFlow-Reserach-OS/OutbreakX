@@ -17,6 +17,10 @@ The platform leverages **ExpressJS, NodeJS, ReactJS, PostgreSQL with PostGIS,** 
       - [Start Backend](#start-backend)
       - [Start Full Project with Turborepo](#start-full-project-with-turborepo)
   - [Contributing](#contributing)
+  - [🎉 Hacktoberfest 2024](#-hacktoberfest-2024)
+    - [How to Participate](#how-to-participate)
+    - [Contribution Tips](#contribution-tips)
+    - [Why Contribute?](#why-contribute)
 
 ## Features
 
@@ -102,3 +106,34 @@ turbo run dev
 ## Contributing
 
 We welcome contributions! Please read our [Contributing Guidelines](docs/CONTRIBUTING.md) for details on the process for submitting pull requests and reporting issues.
+
+Here’s a Hacktoberfest section you can add to the README:
+
+---
+
+## 🎉 Hacktoberfest 2024
+
+Thank you for your interest in contributing during [Hacktoberfest](https://hacktoberfest.com/)! We’re excited to have contributors from around the world join us in building a platform that can make a real impact in public health.
+
+### How to Participate
+
+1. **Sign Up for Hacktoberfest**: Go to the [Hacktoberfest website](https://hacktoberfest.com/) and register to have your contributions counted.
+2. **Browse Issues**: Check out the [Issues](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues) labeled with `hacktoberfest`, `good first issue`, or `help wanted` for tasks suited for all experience levels.
+3. **Get Started**:
+   - Fork this repository and clone it locally.
+   - Work on the issue, following our [contribution guidelines](docs/CONTRIBUTING.md).
+   - Once ready, open a pull request for review.
+
+### Contribution Tips
+
+- **Quality Contributions**: To ensure meaningful contributions, please avoid making low-quality PRs. PRs that are spammy or unrelated will be marked as invalid.
+- **Documentation is Important**: Contributions to documentation, adding tests, or improving the code structure are highly appreciated.
+- **Follow the Code of Conduct**: Our [Code of Conduct](docs/CODE_OF_CONDUCT.md) outlines the standards we expect. Please ensure all interactions are respectful and constructive.
+
+### Why Contribute?
+
+By participating in Hacktoberfest with **OutbreakX**, you’re helping to create a tool for tracking infectious disease outbreaks, benefiting both local and global communities. This is a chance to make an impact with open-source contributions that really matter. 
+
+Thank you for being part of this effort, and happy coding!
+
+

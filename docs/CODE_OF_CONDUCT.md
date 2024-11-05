@@ -32,7 +32,7 @@ This Code of Conduct applies within all project spaces, including GitHub reposit
 
 ## Reporting Violations
 
-If you observe or experience behavior that violates this Code of Conduct, please report it by emailing [your email address]. All reports will be reviewed and investigated promptly and confidentially.
+If you observe or experience behavior that violates this Code of Conduct, please report it by emailing legal@sixthflow.com. All reports will be reviewed and investigated promptly and confidentially.
 
 When reporting, please include any relevant details, such as links, screenshots, and descriptions of the behavior. The maintainers commit to maintaining confidentiality and taking appropriate action based on the report.
 

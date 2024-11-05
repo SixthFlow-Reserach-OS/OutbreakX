@@ -44,7 +44,7 @@ Here's the corrected markdown for that section:
 
 ### 4. Make Your Changes
 
-   **Code Standards**: Follow the coding style used in the project to maintain consistency. For larger projects, check if there are specific guidelines or a style guide.
+   **Code Standards**: Follow the coding style used in the project to maintain consistency.
 
 ### 5. Add Tests (If Applicable)
 

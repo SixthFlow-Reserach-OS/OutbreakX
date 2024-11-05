@@ -8,7 +8,7 @@ Welcome! We’re thrilled that you’re interested in contributing to **Outbreak
    
 2. **Choose an Issue or Suggest an Idea**:
    - Comment on an open issue to let us know you're working on it. This prevents duplicate work.
-   - If you’d like to add a new feature or report a bug, feel free to [issues](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues).
+   - If you’d like to add a new feature or report a bug, feel free to feel free to open a new [issue](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues).
 
 ## Code of Conduct
 

@@ -16,18 +16,21 @@ This project adheres to a **Code of Conduct** to foster a welcoming and collabor
 
 ## How to Contribute
 
+Here's the corrected markdown for that section:
+
+---
 ### 1. Fork and Clone the Repository
 
    First, [fork the repository](https://github.com/SixthFlow-Reserach-OS/OutbreakX.git) and clone it locally:
 
    ```bash
-   git [clone https://github.com/your-username/[project-name].git](https://github.com/SixthFlow-Reserach-OS/OutbreakX.git)
-   cd [OutbreakX]
+   git clone https://github.com/your-username/OutbreakX.git
+   cd OutbreakX
    ```
 
 ### 2. Set Up the Project
 
-   Follow the [README.md](link-to-readme) for installation and setup instructions to get the project running locally.
+   Follow the [README.md](/README.md) for installation and setup instructions to get the project running locally.
 
 ### 3. Create a New Branch
 

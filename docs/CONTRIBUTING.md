@@ -1,6 +1,6 @@
 # Contributing to OutbreakX
 
-Welcome! We’re thrilled that you’re interested in contributing to **OutbreakX Name**. Contributions from the community are essential to the success of any open-source project, and we appreciate your time and effort.
+Welcome! We’re thrilled that you’re interested in contributing to **OutbreakX**. Contributions from the community are essential to the success of any open-source project, and we appreciate your time and effort.
 
 ## Getting Started
 

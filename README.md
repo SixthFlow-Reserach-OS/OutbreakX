@@ -1,174 +1,139 @@
-# Contribution Guidelines for OutbreakX (Hacktoberfest 2024)
+# OutbreakX
 
-Thank you for your interest in contributing to **OutbreakX**, an open-source project for infectious disease surveillance using geospatial data. Contributions from the community are what make this project successful, and we are excited to have you onboard during Hacktoberfest!
-
-OutbreakX is built with **ExpressJS**, **NodeJS**, **ReactJS**, **PostgreSQL** (with **PostGIS**), and **OpenStreetMaps**, and focuses on providing real-time tracking of disease outbreaks.
-
-Please take a moment to review this document before contributing. By participating in this project, you agree to abide by the following guidelines.
+OutbreakX is an open-source platform designed for **infectious disease surveillance**. It utilizes geospatial data to track and visualize disease outbreaks in real time, aiding public health efforts with detailed, accurate, and up-to-date location-based insights.
+The platform leverages **ExpressJS, NodeJS, ReactJS, PostgreSQL with PostGIS,** and **OpenStreetMaps** to enable efficient data collection, analysis, and visualization of infectious disease patterns.
 
 ## Table of Contents
 
-- [Contribution Guidelines for OutbreakX (Hacktoberfest 2024)](#contribution-guidelines-for-outbreakx-hacktoberfest-2024)
+- [OutbreakX](#outbreakx)
   - [Table of Contents](#table-of-contents)
-  - [Code of Conduct](#code-of-conduct)
+  - [Features](#features)
+  - [Technologies](#technologies)
   - [Getting Started](#getting-started)
-  - [How to Contribute](#how-to-contribute)
-  - [Development Setup](#development-setup)
-    - [Steps:](#steps)
-  - [Contribution Guidelines](#contribution-guidelines)
-    - [Coding Standards](#coding-standards)
-    - [Git Workflow](#git-workflow)
-    - [Frontend Contributions (ReactJS)](#frontend-contributions-reactjs)
-    - [Backend Contributions (NodeJS/ExpressJS)](#backend-contributions-nodejsexpressjs)
-    - [Testing](#testing)
-  - [Issue Reporting](#issue-reporting)
-  - [Pull Request Process](#pull-request-process)
-  - [Hacktoberfest Participation](#hacktoberfest-participation)
-  - [Contact](#contact)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Running the Project](#running-the-project)
+      - [Start Frontend](#start-frontend)
+      - [Start Backend](#start-backend)
+      - [Start Full Project with Turborepo](#start-full-project-with-turborepo)
+  - [Contributing](#contributing)
+  - [🎉 Hacktoberfest 2024](#-hacktoberfest-2024)
+    - [How to Participate](#how-to-participate)
+    - [Contribution Tips](#contribution-tips)
+    - [Why Contribute?](#why-contribute)
 
----
+## Features
 
-## Code of Conduct
+- **Real-Time Outbreak Tracking**: Monitor infectious disease outbreaks with real-time data and visualizations.
+- **Geospatial Analysis**: Powered by PostGIS, OutbreakX enables precise mapping and spatial analysis of disease data.
+- **User-Friendly Interface**: A React-based frontend provides a smooth, responsive experience.
+- **Open Data Integration**: Integrates OpenStreetMaps for comprehensive mapping capabilities.
+- **API Access**: Node.js backend with Express allows seamless access to data for further analysis.
 
-We expect all contributors to uphold our [Code of Conduct](CODE_OF_CONDUCT.md), which aims to create a welcoming and respectful community for everyone. Please make sure to familiarize yourself with it before contributing.
+## Technologies
+
+- **Frontend**: ReactJS, leafletjs, OpenStreetMaps
+- **Backend**: ExpressJS, NodeJS
+- **Database**: PostgreSQL with PostGIS extension for geospatial data
+- **Monorepo Management**: Turborepo, pnpm
 
 ## Getting Started
 
-To get started with contributing:
+### Prerequisites
 
-1. **Fork** the repository to your GitHub account.
-2. **Clone** your fork to your local machine:
-   ```bash
-   git clone https://github.com/your-username/outbreakx.git
-   ```
-3. **Create a branch** for your changes:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+Ensure you have the following tools installed:
 
-## How to Contribute
-
-We welcome contributions in the following areas:
-
-- **Bug Fixes**: If you encounter any bugs, feel free to tackle them.
-- **New Features**: Check out the [issues](https://github.com/OutbreakX/issues) page for feature requests or suggest your own.
-- **Documentation**: We always need improvements in documentation, including code comments and guides.
-- **Testing**: Help improve test coverage for both the frontend and backend.
-- **UI/UX Improvements**: Contributions to the ReactJS-based frontend are highly appreciated.
-
-## Development Setup
-
-Ensure you have the following installed:
-
-- **Node.js** (version 18.x.x or higher)
+- **Node.js** (>= 14.x)
+- **pnpm** (Package manager, installation instructions [here](https://pnpm.io/installation))
 - **PostgreSQL** (with PostGIS extension)
-- **npm** or **yarn**
 
-### Steps:
+### Installation
 
-1. Install the dependencies:
+1. **Clone the repository**:
+
    ```bash
-   npm install
+   git clone https://github.com/SixthFlow-Reserach-OS/OutbreakX.git
+   cd OutbreakX
    ```
 
-2. Set up the PostgreSQL database and configure the PostGIS extension.
+2. **Install dependencies**:
 
-3. Create a `.env` file in the project root with the required environment variables (you can use `.env.example` as a template).
-
-4. Run the development server:
    ```bash
-   npm run dev
+   pnpm install
    ```
 
-5. The application should be accessible at `http://localhost:3000`.
+3. **Set up PostgreSQL and PostGIS**:
 
-## Contribution Guidelines
+   - Ensure PostgreSQL is running and initialize a database for OutbreakX.
+   - Enable PostGIS on the database. For example:
+     ```sql
+     CREATE EXTENSION postgis;
+     ```
 
-### Coding Standards
+4. **Configure Environment Variables**:
 
-- Follow **ESLint** rules for JavaScript and React.
-- Make sure your code adheres to our formatting rules (we use **Prettier**).
-- Keep your commits clean and organized. Follow a standard commit message format, such as:
-  - `feat: description of the feature`
-  - `fix: description of the fix`
-  - `docs: description of documentation change`
-  
-### Git Workflow
+   - Create a `.env` file in the root directory and add necessary environment variables (e.g., database credentials, API keys).
 
-- **Fork** the repository and create your branch from `main`.
-- Ensure that your pull request is **small and focused**. Large PRs are harder to review and slower to merge.
-- Keep your branch up-to-date with the latest changes in the `main` branch.
-- Write **descriptive commit messages**.
-- Squash commits if necessary, especially when addressing review comments.
+### Running the Project
 
-### Frontend Contributions (ReactJS)
+#### Start Frontend
 
-- Use functional components and React hooks where appropriate.
-- Follow a **component-based architecture** for better maintainability.
-- If introducing new UI elements, ensure they are **responsive** and follow accessible design patterns.
+To start the frontend workspace:
 
-### Backend Contributions (NodeJS/ExpressJS)
+```bash
+pnpm --filter frontend start
+```
 
-- Follow **RESTful API design principles**.
-- Ensure that database queries are optimized, especially when dealing with geospatial data in **PostgreSQL/PostGIS**.
-- Add appropriate error handling.
+#### Start Backend
 
-### Testing
+To start the backend workspace:
 
-- Contributions should include tests for new or modified functionality.
-- We use **Jest** for unit testing.
-- Ensure that the test coverage does not decrease.
+```bash
+pnpm --filter backend dev
+```
 
-## Issue Reporting
+#### Start Full Project with Turborepo
 
-If you find a bug or have a feature request:
+To run both frontend and backend together using Turborepo:
 
-1. Check the [issues](https://github.com/OutbreakX/issues) to see if the problem has already been reported.
-2. If the issue is not listed, open a new one and provide a detailed description, steps to reproduce (if applicable), and any related logs or screenshots.
+```bash
+turbo run dev
+```
 
-## Pull Request Process
+> **Note**: If you encounter any errors, please check the Turborepo configuration or the `package.json` files in individual workspaces for any issues.
 
-1. **Fork** the repository and create your feature branch from `main`.
-2. Ensure that your code follows the guidelines and that you have included relevant tests.
-3. Submit your pull request.
-4. Wait for feedback and respond to review comments.
 
-Make sure that your pull request description includes:
+## Contributing
 
-- A **summary** of the changes.
-- A link to the related issue (if applicable).
-- Any **screenshots** or visuals if your changes involve UI improvements.
+We welcome contributions! Please read our [Contributing Guidelines](docs/CONTRIBUTING.md) for details on the process for submitting pull requests and reporting issues.
 
-## Hacktoberfest Participation
 
-OutbreakX is proud to be a part of **Hacktoberfest 2024**! To participate:
 
-1. Ensure that your pull requests are **quality contributions** (not spam or trivial changes).
-2. Each PR should address an issue, add a meaningful feature, or improve documentation in a significant way.
-3. Make sure your pull request is marked as **Hacktoberfest-accepted** by our maintainers.
+---
 
-**Note**: PRs that are labeled as "invalid" or "spam" will not be counted towards Hacktoberfest.
+## 🎉 Hacktoberfest 2024
 
-## Contact
+Thank you for your interest in contributing during [Hacktoberfest](https://hacktoberfest.com/)! We’re excited to have contributors from around the world join us in building a platform that can make a real impact in public health.
 
-If you have any questions, feel free to reach out to us via:
+### How to Participate
 
-- **GitHub Discussions**: [OutbreakX Discussions](https://github.com/OutbreakX/discussions)
-- **Email**: outbreakx-support@sixthflow.com
+1. **Sign Up for Hacktoberfest**: Go to the [Hacktoberfest website](https://hacktoberfest.com/) and register to have your contributions counted.
+2. **Browse Issues**: Check out the [Issues](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues) labeled with `hacktoberfest`, `good first issue`, or `help wanted` for tasks suited for all experience levels.
+3. **Get Started**:
+   - Fork this repository and clone it locally.
+   - Work on the issue, following our [contribution guidelines](docs/CONTRIBUTING.md).
+   - Once ready, open a pull request for review.
 
-We are looking forward to your contributions! Happy coding, and enjoy Hacktoberfest 2024! 🎉
+### Contribution Tips
 
-Start frontend workspace
+- **Quality Contributions**: To ensure meaningful contributions, please avoid making low-quality PRs. PRs that are spammy or unrelated will be marked as invalid.
+- **Documentation is Important**: Contributions to documentation, adding tests, or improving the code structure are highly appreciated.
+- **Follow the Code of Conduct**: Our [Code of Conduct](docs/CODE_OF_CONDUCT.md) outlines the standards we expect. Please ensure all interactions are respectful and constructive.
 
-`pnpm --filter frontend start`
+### Why Contribute?
 
-start backend workspace
+By participating in Hacktoberfest with **OutbreakX**, you’re helping to create a tool for tracking infectious disease outbreaks, benefiting both local and global communities. This is a chance to make an impact with open-source contributions that really matter. 
 
-`pnpm --filter backend dev`
+Thank you for being part of this effort, and happy coding!
 
-start project using turbo repo
-
-`turbo run dev`
-
-Note: If any error check the turborepo config or individual package.json file.
 

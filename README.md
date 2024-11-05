@@ -51,7 +51,7 @@ To get started with contributing:
 We welcome contributions in the following areas:
 
 - **Bug Fixes**: If you encounter any bugs, feel free to tackle them.
-- **New Features**: Check out the [issues](https://github.com/OutbreakX/issues) page for feature requests or suggest your own.
+- **New Features**: Check out the [issues](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues) page for feature requests or suggest your own.
 - **Documentation**: We always need improvements in documentation, including code comments and guides.
 - **Testing**: Help improve test coverage for both the frontend and backend.
 - **UI/UX Improvements**: Contributions to the ReactJS-based frontend are highly appreciated.
@@ -123,7 +123,7 @@ Ensure you have the following installed:
 
 If you find a bug or have a feature request:
 
-1. Check the [issues](https://github.com/OutbreakX/issues) to see if the problem has already been reported.
+1. Check the [issues](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues) to see if the problem has already been reported.
 2. If the issue is not listed, open a new one and provide a detailed description, steps to reproduce (if applicable), and any related logs or screenshots.
 
 ## Pull Request Process
@@ -153,7 +153,7 @@ OutbreakX is proud to be a part of **Hacktoberfest 2024**! To participate:
 
 If you have any questions, feel free to reach out to us via:
 
-- **GitHub Discussions**: [OutbreakX Discussions](https://github.com/OutbreakX/discussions)
+- **GitHub Discussions**: [OutbreakX Discussions](https://github.com/SixthFlow-Reserach-OS/OutbreakX/discussions)
 - **Email**: outbreakx-support@sixthflow.com
 
 We are looking forward to your contributions! Happy coding, and enjoy Hacktoberfest 2024! 🎉

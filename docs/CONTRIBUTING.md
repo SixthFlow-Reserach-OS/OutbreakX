@@ -1,6 +1,6 @@
 # Contributing to OutbreakX
 
-Welcome! We’re thrilled that you’re interested in contributing to **[OutbreakX Name**. Contributions from the community are essential to the success of any open-source project, and we appreciate your time and effort.
+Welcome! We’re thrilled that you’re interested in contributing to **OutbreakX**. Contributions from the community are essential to the success of any open-source project, and we appreciate your time and effort.
 
 ## Getting Started
 
@@ -8,7 +8,7 @@ Welcome! We’re thrilled that you’re interested in contributing to **[Outbrea
    
 2. **Choose an Issue or Suggest an Idea**:
    - Comment on an open issue to let us know you're working on it. This prevents duplicate work.
-   - If you’d like to add a new feature or report a bug, feel free to [issues](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues).
+   - If you’d like to add a new feature or report a bug, feel free to feel free to open a new [issue](https://github.com/SixthFlow-Reserach-OS/OutbreakX/issues/new).
 
 ## Code of Conduct
 
@@ -44,7 +44,7 @@ Here's the corrected markdown for that section:
 
 ### 4. Make Your Changes
 
-   **Code Standards**: Follow the coding style used in the project to maintain consistency. For larger projects, check if there are specific guidelines or a style guide.
+   **Code Standards**: Follow the coding style used in the project to maintain consistency.
 
 ### 5. Add Tests (If Applicable)
 

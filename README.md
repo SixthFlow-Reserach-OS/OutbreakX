@@ -107,7 +107,7 @@ turbo run dev
 
 We welcome contributions! Please read our [Contributing Guidelines](docs/CONTRIBUTING.md) for details on the process for submitting pull requests and reporting issues.
 
-Here’s a Hacktoberfest section you can add to the README:
+
 
 ---
 

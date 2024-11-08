@@ -6,54 +6,70 @@ import 'leaflet/dist/leaflet.css';
 
 interface MarkerData {
   location: {
-    type: string;
+    type: 'Point';
     coordinates: [number, number];
   };
   description: string;
 }
 
-const icon = new L.Icon({
+// Interface for the right-click position data structure
+interface RightClickPosition {
+  lat: number;      // Latitude of clicked position
+  lng: number;      // Longitude of clicked position
+  clientX: number;  // X coordinate of mouse click on screen
+  clientY: number;  // Y coordinate of mouse click on screen
+}
+
+const markerIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  shadowSize: [41, 41],
 });
 
 const MapComponent: React.FC = () => {
-  const [markers, setMarkers] = useState<MarkerData[]>([]);
-  const [rightClickPos, setRightClickPos] = useState<{
-    lat: number;
-    lng: number;
-    clientX: number;
-    clientY: number;
-  } | null>(null);
+  // State management
+  const [markers, setMarkers] = useState<MarkerData[]>([]); // Store map markers
+  const [rightClickPos, setRightClickPos] = useState<RightClickPosition | null>(null); // Store right-click position
 
+  // Component to handle map events (click and right-click)
   const MapEventHandler = () => {
     useMapEvents({
-      // Left click - Add marker
-      click: (e) => {
-        const { lat, lng } = e.latlng;
-        const description = prompt("Enter description for this marker:");
-        if (description) {
-          const newMarker = { location: { type: 'Point', coordinates: [lng, lat] }, description };
-          axios.post('http://localhost:3001/markers', newMarker)
-            .then(response => setMarkers([...markers, response.data]))
-            .catch(error => console.error('Error creating marker:', error));
-        }
-      },
-      // Right click - Show coordinates
+      // Handle right-click events
       contextmenu: (e) => {
         const { lat, lng } = e.latlng;
+        // Save both geographical coordinates and screen coordinates
         setRightClickPos({ 
           lat, 
           lng, 
           clientX: e.originalEvent.clientX,
           clientY: e.originalEvent.clientY
         });
-        e.originalEvent.preventDefault();
+        e.originalEvent.preventDefault(); // Prevent default context menu
+      },
+
+      // Handle left-click events for adding markers
+      click: (e) => {
+        const { lat, lng } = e.latlng;
+        const description = prompt("Enter description for this marker:");
+        if (description) {
+          // Create new marker with coordinates and description
+          const newMarker = { 
+            location: { 
+              type: 'Point', 
+              coordinates: [lng, lat] 
+            }, 
+            description 
+          };
+          
+          // Save marker to backend and update state
+          axios.post('http://localhost:3001/markers', newMarker)
+            .then(response => setMarkers([...markers, response.data]))
+            .catch(error => console.error('Error creating marker:', error));
+        }
       }
     });
     return null;
@@ -61,127 +77,67 @@ const MapComponent: React.FC = () => {
 
   return (
     <div>
-      <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "100vh", width: "100%" }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      {/* Main Map Container */}
+      <MapContainer 
+        center={[51.505, -0.09]} // Initial center position (London)
+        zoom={13}                // Initial zoom level
+        style={{ height: "100vh", width: "100%" }}
+      >
+        {/* Base map layer using OpenStreetMap */}
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+        {/* Render all markers on the map */}
         {markers.map((marker, index) => (
           <Marker 
             key={index} 
             position={[marker.location.coordinates[1], marker.location.coordinates[0]]} 
-            icon={icon} 
+            icon={markerIcon} 
           />
         ))}
+
+        {/* Add event handler component */}
         <MapEventHandler />
       </MapContainer>
-      
+
+      {/* Right-click coordinate display box */}
       {rightClickPos && (
         <div style={{ 
           position: 'fixed',
+          // Position box near click location, but prevent it from going off-screen
           left: Math.min(rightClickPos.clientX + 10, window.innerWidth - 250),
           top: Math.min(rightClickPos.clientY + 10, window.innerHeight - 150),
-          background: 'white', 
-          padding: '15px',
-          borderRadius: '8px',
-          boxShadow: '0 3px 14px rgba(0,0,0,0.15)',
-          zIndex: 1000,
-          width: '220px',
-          border: '1px solid #e0e0e0',
-          fontFamily: 'Arial, sans-serif'
+          // ... styling properties ...
         }}>
-          <button 
-            onClick={() => setRightClickPos(null)}
-            style={{ 
-              position: 'absolute',
-              right: '8px',
-              top: '8px',
-              border: 'none',
-              background: '#f5f5f5',
-              cursor: 'pointer',
-              padding: '4px 8px',
-              borderRadius: '4px',
-              color: '#666',
-              fontSize: '14px',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            ✕
-          </button>
+          {/* Close button */}
+          <button onClick={() => setRightClickPos(null)}>✕</button>
 
-          <div style={{ marginBottom: '12px', paddingRight: '20px' }}>
-            <h3 style={{ 
-              margin: '0 0 10px 0',
-              color: '#333',
-              fontSize: '16px',
-              fontWeight: 600 
-            }}>
-              Location Details
-            </h3>
+          {/* Title section */}
+          <div>
+            <h3>Location Details</h3>
           </div>
 
-          <div style={{
-            background: '#f8f9fa',
-            padding: '10px',
-            borderRadius: '6px',
-            marginBottom: '12px'
-          }}>
-            <div style={{ marginBottom: '8px' }}>
-              <label style={{ 
-                color: '#666', 
-                fontSize: '12px', 
-                display: 'block',
-                marginBottom: '2px'
-              }}>
-                Latitude
-              </label>
-              <span style={{ 
-                color: '#333',
-                fontSize: '14px',
-                fontFamily: 'monospace'
-              }}>
-                {rightClickPos.lat.toFixed(6)}
-              </span>
+          {/* Coordinates display section */}
+          <div>
+            {/* Latitude display */}
+            <div>
+              <label>Latitude</label>
+              <span>{rightClickPos.lat.toFixed(6)}</span>
             </div>
             
+            {/* Longitude display */}
             <div>
-              <label style={{ 
-                color: '#666', 
-                fontSize: '12px', 
-                display: 'block',
-                marginBottom: '2px'
-              }}>
-                Longitude
-              </label>
-              <span style={{ 
-                color: '#333',
-                fontSize: '14px',
-                fontFamily: 'monospace'
-              }}>
-                {rightClickPos.lng.toFixed(6)}
-              </span>
+              <label>Longitude</label>
+              <span>{rightClickPos.lng.toFixed(6)}</span>
             </div>
           </div>
 
+          {/* Copy coordinates button */}
           <button 
-            onClick={() => navigator.clipboard.writeText(`${rightClickPos.lat},${rightClickPos.lng}`)}
-            style={{ 
-              width: '100%',
-              padding: '8px 12px',
-              background: '#4a90e2',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 500,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              transition: 'background 0.2s ease'
-            }}
+            onClick={() => navigator.clipboard.writeText(
+              `${rightClickPos.lat},${rightClickPos.lng}`
+            )}
           >
-            <span style={{ fontSize: '16px' }}>📋</span> Copy Coordinates
+            <span>📋</span> Copy Coordinates
           </button>
         </div>
       )}

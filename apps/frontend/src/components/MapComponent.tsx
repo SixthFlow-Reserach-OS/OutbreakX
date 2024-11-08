@@ -6,40 +6,59 @@ import 'leaflet/dist/leaflet.css';
 
 interface MarkerData {
   location: {
-    type: 'Point';
+    type: string;
     coordinates: [number, number];
   };
   description: string;
 }
 
-// Interface for the right-click position data structure
-interface RightClickPosition {
-  lat: number;      // Latitude of clicked position
-  lng: number;      // Longitude of clicked position
-  clientX: number;  // X coordinate of mouse click on screen
-  clientY: number;  // Y coordinate of mouse click on screen
-}
-
-const markerIcon = new L.Icon({
+const icon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+  shadowSize: [41, 41]
 });
 
-const MapComponent: React.FC = () => {
-  // State management
-  const [markers, setMarkers] = useState<MarkerData[]>([]); // Store map markers
-  const [rightClickPos, setRightClickPos] = useState<RightClickPosition | null>(null); // Store right-click position
+// Interface defining the structure of marker data
+// Each marker has a location (with type and coordinates) and a description
+interface MarkerData {
+  location: {
+    type: string;
+    coordinates: [number, number];
+  };
+  description: string;
+}
 
-  // Separate MapEventHandler component
+// Main map component that handles markers and interactions
+const MapComponent: React.FC = () => {
+  // State for storing markers and right-click position information
+  const [markers, setMarkers] = useState<MarkerData[]>([]);
+  const [rightClickPos, setRightClickPos] = useState<{
+    lat: number;
+    lng: number;
+    clientX: number;
+    clientY: number;
+  } | null>(null);
+
+  // Component to handle map events (click and right-click)
   const MapEventHandler = () => {
     useMapEvents({
+      // Left click - Add marker with user-provided description
+      click: (e) => {
+        const { lat, lng } = e.latlng;
+        const description = prompt("Enter description for this marker:");
+        if (description) {
+          const newMarker = { location: { type: 'Point', coordinates: [lng, lat] }, description };
+          axios.post('http://localhost:3001/markers', newMarker)
+            .then(response => setMarkers([...markers, response.data]))
+            .catch(error => console.error('Error creating marker:', error));
+        }
+      },
+      // Right click - Show coordinates in a popup overlay
       contextmenu: (e) => {
-        e.originalEvent.preventDefault();
         const { lat, lng } = e.latlng;
         setRightClickPos({ 
           lat, 
@@ -47,150 +66,140 @@ const MapComponent: React.FC = () => {
           clientX: e.originalEvent.clientX,
           clientY: e.originalEvent.clientY
         });
-      },
-      click: (e) => {
-        const { lat, lng } = e.latlng;
-        const description = prompt("Enter description for this marker:");
-        if (description) {
-          const newMarker = { 
-            location: { 
-              type: 'Point', 
-              coordinates: [lng, lat] 
-            }, 
-            description 
-          };
-          
-          axios.post('http://localhost:3001/markers', newMarker)
-            .then(response => setMarkers([...markers, response.data]))
-            .catch(error => console.error('Error creating marker:', error));
-        }
+        e.originalEvent.preventDefault();
       }
     });
     return null;
   };
 
   return (
-    <div 
-      className="map-container" 
-      style={{ 
-        position: 'relative', 
-        height: '100vh', 
-        width: '100%',
-        padding: '20px',
-        backgroundColor: '#f5f5f5'
-      }}
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <MapContainer 
-        center={[51.505, -0.09]}
-        zoom={13}
-        style={{ 
-          height: "100%", 
-          width: "100%",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-          border: "2px solid #fff"
-        }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <div>
+      {/* Main map container centered on London coordinates */}
+      <MapContainer center={[51.505, -0.09]} zoom={13} style={{ height: "100vh", width: "100%" }}>
+        {/* OpenStreetMap tile layer for map rendering */}
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {/* Render all markers from state */}
         {markers.map((marker, index) => (
           <Marker 
             key={index} 
             position={[marker.location.coordinates[1], marker.location.coordinates[0]]} 
-            icon={markerIcon} 
+            icon={icon} 
           />
         ))}
+        {/* Component that handles map interactions */}
         <MapEventHandler />
       </MapContainer>
-
+      
+      {/* Conditional rendering of the right-click coordinate popup */}
       {rightClickPos && (
-        <div 
-          style={{ 
-            position: 'absolute',
-            left: Math.min(rightClickPos.clientX, window.innerWidth - 250),
-            top: Math.min(rightClickPos.clientY, window.innerHeight - 150),
-            backgroundColor: 'white',
-            padding: '15px',
-            borderRadius: '12px',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
-            zIndex: 1000,
-            minWidth: '200px',
-            border: '1px solid #eaeaea'
-          }}
-        >
+        <div style={{ 
+          position: 'fixed',
+          left: Math.min(rightClickPos.clientX + 10, window.innerWidth - 250),
+          top: Math.min(rightClickPos.clientY + 10, window.innerHeight - 150),
+          background: 'white', 
+          padding: '15px',
+          borderRadius: '8px',
+          boxShadow: '0 3px 14px rgba(0,0,0,0.15)',
+          zIndex: 1000,
+          width: '220px',
+          border: '1px solid #e0e0e0',
+          fontFamily: 'Arial, sans-serif'
+        }}>
           <button 
             onClick={() => setRightClickPos(null)}
-            style={{
+            style={{ 
               position: 'absolute',
-              right: '10px',
-              top: '10px',
+              right: '8px',
+              top: '8px',
               border: 'none',
-              background: 'none',
+              background: '#f5f5f5',
               cursor: 'pointer',
-              fontSize: '16px',
+              padding: '4px 8px',
+              borderRadius: '4px',
               color: '#666',
-              padding: '5px'
+              fontSize: '14px',
+              transition: 'all 0.2s ease'
             }}
           >
             ✕
           </button>
 
-          <div style={{ marginBottom: '15px' }}>
+          <div style={{ marginBottom: '12px', paddingRight: '20px' }}>
             <h3 style={{ 
-              margin: '0 0 15px 0',
+              margin: '0 0 10px 0',
               color: '#333',
-              fontSize: '18px'
+              fontSize: '16px',
+              fontWeight: 600 
             }}>
               Location Details
             </h3>
           </div>
 
-          <div style={{ marginBottom: '15px' }}>
+          <div style={{
+            background: '#f8f9fa',
+            padding: '10px',
+            borderRadius: '6px',
+            marginBottom: '12px'
+          }}>
             <div style={{ marginBottom: '8px' }}>
               <label style={{ 
-                marginRight: '8px',
-                color: '#666',
-                fontWeight: '500'
+                color: '#666', 
+                fontSize: '12px', 
+                display: 'block',
+                marginBottom: '2px'
               }}>
-                Latitude:
+                Latitude
               </label>
-              <span style={{ color: '#333' }}>{rightClickPos.lat.toFixed(6)}</span>
+              <span style={{ 
+                color: '#333',
+                fontSize: '14px',
+                fontFamily: 'monospace'
+              }}>
+                {rightClickPos.lat.toFixed(6)}
+              </span>
             </div>
+            
             <div>
               <label style={{ 
-                marginRight: '8px',
-                color: '#666',
-                fontWeight: '500'
+                color: '#666', 
+                fontSize: '12px', 
+                display: 'block',
+                marginBottom: '2px'
               }}>
-                Longitude:
+                Longitude
               </label>
-              <span style={{ color: '#333' }}>{rightClickPos.lng.toFixed(6)}</span>
+              <span style={{ 
+                color: '#333',
+                fontSize: '14px',
+                fontFamily: 'monospace'
+              }}>
+                {rightClickPos.lng.toFixed(6)}
+              </span>
             </div>
           </div>
 
           <button 
             onClick={() => navigator.clipboard.writeText(`${rightClickPos.lat},${rightClickPos.lng}`)}
-            style={{
-              padding: '8px 16px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              backgroundColor: '#4a90e2',
+            style={{ 
+              width: '100%',
+              padding: '8px 12px',
+              background: '#4a90e2',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: '4px',
+              cursor: 'pointer',
               fontSize: '14px',
-              transition: 'background-color 0.2s'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#357abd';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#4a90e2';
+              fontWeight: 500,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              transition: 'background 0.2s ease'
             }}
           >
-            <span>📋</span> Copy Coordinates
+            <span style={{ fontSize: '16px' }}>📋</span> Copy Coordinates
           </button>
         </div>
       )}

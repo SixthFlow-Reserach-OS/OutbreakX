@@ -42,6 +42,15 @@ const MapComponent: React.FC = () => {
     clientX: number;
     clientY: number;
   } | null>(null);
+  const [descriptionDialog, setDescriptionDialog] = useState<{
+    isOpen: boolean;
+    position: { lat: number; lng: number; } | null;
+    description: string;
+  }>({
+    isOpen: false,
+    position: null,
+    description: ''
+  });
 
   // Component to handle map events (click and right-click)
   const MapEventHandler = () => {
@@ -49,13 +58,11 @@ const MapComponent: React.FC = () => {
       // Left click - Add marker with user-provided description
       click: (e) => {
         const { lat, lng } = e.latlng;
-        const description = prompt("Enter description for this marker:");
-        if (description) {
-          const newMarker = { location: { type: 'Point', coordinates: [lng, lat] }, description };
-          axios.post('http://localhost:3001/markers', newMarker)
-            .then(response => setMarkers([...markers, response.data]))
-            .catch(error => console.error('Error creating marker:', error));
-        }
+        setDescriptionDialog({
+          isOpen: true,
+          position: { lat, lng },
+          description: ''
+        });
       },
       // Right click - Show coordinates in a popup overlay
       contextmenu: (e) => {
@@ -70,6 +77,25 @@ const MapComponent: React.FC = () => {
       }
     });
     return null;
+  };
+
+  // Add function to handle marker creation
+  const handleCreateMarker = () => {
+    if (descriptionDialog.position && descriptionDialog.description) {
+      const newMarker = {
+        location: {
+          type: 'Point',
+          coordinates: [descriptionDialog.position.lng, descriptionDialog.position.lat]
+        },
+        description: descriptionDialog.description
+      };
+      
+      axios.post('http://localhost:3001/markers', newMarker)
+        .then(response => setMarkers([...markers, response.data]))
+        .catch(error => console.error('Error creating marker:', error));
+      
+      setDescriptionDialog({ isOpen: false, position: null, description: '' });
+    }
   };
 
   return (
@@ -201,6 +227,68 @@ const MapComponent: React.FC = () => {
           >
             <span style={{ fontSize: '16px' }}>📋</span> Copy Coordinates
           </button>
+        </div>
+      )}
+
+      {/* Add Description Dialog */}
+      {descriptionDialog.isOpen && (
+        <div style={{
+          position: 'fixed',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: 'white',
+          padding: '20px',
+          borderRadius: '8px',
+          boxShadow: '0 3px 14px rgba(0,0,0,0.15)',
+          zIndex: 1000,
+          width: '300px',
+          border: '1px solid #e0e0e0'
+        }}>
+          <h3 style={{ margin: '0 0 15px 0' }}>Add Marker Description</h3>
+          <textarea
+            value={descriptionDialog.description}
+            onChange={(e) => setDescriptionDialog({
+              ...descriptionDialog,
+              description: e.target.value
+            })}
+            style={{
+              width: '100%',
+              padding: '8px',
+              marginBottom: '15px',
+              borderRadius: '4px',
+              border: '1px solid #ddd',
+              minHeight: '100px'
+            }}
+            placeholder="Enter description for this marker..."
+          />
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+            <button
+              onClick={() => setDescriptionDialog({ isOpen: false, position: null, description: '' })}
+              style={{
+                padding: '8px 15px',
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                background: 'white',
+                cursor: 'pointer'
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreateMarker}
+              style={{
+                padding: '8px 15px',
+                background: '#4a90e2',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              Add Marker
+            </button>
+          </div>
         </div>
       )}
     </div>

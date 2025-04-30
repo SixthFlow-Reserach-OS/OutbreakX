@@ -1,0 +1,15 @@
+name: fastapi-service
+componentType: service
+build:
+  buildCommand: pip install -r requirements.txt
+  runCommand: uvicorn main:app --host=0.0.0.0 --port=8000
+inbound:
+  - name: http
+    type: REST
+    context: /api/v1
+    port: 8000
+    method: GET,POST   # Specify methods or make it "*"
+    routes:  # You might need to explicitly list routes
+      - "/ping"
+      - "/point/all"
+      - "/point"
